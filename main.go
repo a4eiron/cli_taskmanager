@@ -40,13 +40,15 @@ func NewTask(name string) Task {
 	}
 }
 
-const taskFile = "tasks.json"
-const lockFile = "tasks.lock"
+const (
+	taskFile = "tasks.json"
+	lockFile = "tasks.lock"
+)
 
 func main() {
 
-	namePtr := flag.String("name", "", "name of the task")
-	listPtr := flag.Bool("list", false, "list task")
+	addPtr := flag.String("add", "", "name of the task to add")
+	listPtr := flag.Bool("list", false, "list tasks")
 	deletePtr := flag.String("delete", "", "id of task to delete")
 	donePtr := flag.String("done", "", "id of the task to update to done")
 
@@ -66,8 +68,8 @@ func main() {
 	}
 	defer file.Close()
 
-	if *namePtr != "" {
-		task := NewTask(*namePtr)
+	if *addPtr != "" {
+		task := NewTask(*addPtr)
 		err := AddTask(file, task)
 		if err != nil {
 			log.Fatalln("Error adding task:", err)
